@@ -15,10 +15,16 @@ fn main() {
     };
 
     print_character(knight);
+    take_three_damage(knight);
 
     fn print_character(character: Character) {
         println!("{}'s HP is currently {}.", character.name, character.hp);
         println!("{}'s attack is {}, and it does {} damage.", character.name, character.attack, character.damage);
+    }
+
+    fn take_three_damage(character: Character) -> Character {
+        println!("{} takes 3 damage!", character.name)
+        character.hp -= 3
     }
 }
 
