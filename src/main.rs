@@ -7,25 +7,33 @@ fn main() {
         damage: u32,
     };
 
-    let knight = Character {
+    impl Character {
+        fn print_character_hp(&self) {
+            println!("{}'s HP is currently {}.", self.name, self.hp);
+        }
+
+        fn print_character_attack(&self) {
+            println!("{}'s attack is {}, and it does {} damage.", self.name, self.attack, self.damage);
+        }
+
+        fn take_three_damage(&mut self) {
+            println!("{} takes 3 damage!", self.name);
+            self.hp -= 3
+        }
+    }
+
+    let mut knight = Character {
         name: String::from("Knight"),
         hp: 10,
         attack: String::from("Swing Sword"),
         damage: 5,
     };
 
-    print_character(knight);
-    take_three_damage(knight);
-
-    fn print_character(character: Character) {
-        println!("{}'s HP is currently {}.", character.name, character.hp);
-        println!("{}'s attack is {}, and it does {} damage.", character.name, character.attack, character.damage);
-    }
-
-    fn take_three_damage(character: Character) -> Character {
-        println!("{} takes 3 damage!", character.name)
-        character.hp -= 3
-    }
+    knight.print_character_hp();
+    knight.print_character_attack();
+    knight.take_three_damage();
+    knight.print_character_hp();
+    
 }
 
 
