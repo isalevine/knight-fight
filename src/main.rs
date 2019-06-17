@@ -33,6 +33,11 @@ fn main() {
     knight.print_character_attack();
     knight.take_three_damage();
     knight.print_character_hp();
+
+    // next functions:
+    // if-statement for hp 0 or below => dead
+    // menu!!
+    // randomizer??
     
 }
 
