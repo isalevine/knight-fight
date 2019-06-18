@@ -2,23 +2,30 @@ fn main() {
 
     struct Character {
         name: String,
-        hp: u32,
+        hp: i32,
         attack: String,
-        damage: u32,
+        damage: i32,
     };
 
     impl Character {
         fn print_character_hp(&self) {
             println!("{}'s HP is currently {}.", self.name, self.hp);
+            if self.hp <= 0 {
+                println!("{} is dead!", self.name)
+            };
         }
 
         fn print_character_attack(&self) {
             println!("{}'s attack is {}, and it does {} damage.", self.name, self.attack, self.damage);
         }
 
-        fn take_three_damage(&mut self) {
-            println!("{} takes 3 damage!", self.name);
-            self.hp -= 3
+        fn take_damage(&mut self, character: &Character) {
+            println!("{} takes {} damage from {}!", self.name, character.damage, character.name);
+            if self.hp - character.damage < 0 {
+                self.hp = 0
+            } else {
+                self.hp -= character.damage
+            }
         }
     }
 
@@ -29,10 +36,24 @@ fn main() {
         damage: 5,
     };
 
+    let mut lizardman = Character {
+        name: String::from("Lizardman"),
+        hp: 8,
+        attack: String::from("Chomp"),
+        damage: 3,
+    };
+
     knight.print_character_hp();
-    knight.print_character_attack();
-    knight.take_three_damage();
+    lizardman.print_character_attack();
+    knight.take_damage(&lizardman);
     knight.print_character_hp();
+
+    lizardman.print_character_hp();
+    lizardman.print_character_attack();
+    lizardman.take_damage(&knight);
+    lizardman.print_character_hp();
+    lizardman.take_damage(&knight);
+    lizardman.print_character_hp();
 
     // next functions:
     // if-statement for hp 0 or below => dead
