@@ -13,6 +13,7 @@ fn main() {
         attack: String::from("Swing Sword"),
         damage: 5,
         evade: 50,
+        critical: 50,
     };
 
     let mut lizardman = Character {
@@ -21,6 +22,7 @@ fn main() {
         attack: String::from("Chomp"),
         damage: 3,
         evade: 30,
+        critical: 5,
     };
 
 
@@ -41,6 +43,7 @@ pub struct Character {
     attack: String,
     damage: i32,
     evade: u32,
+    critical: u32,
 }
 
 impl Character {
@@ -59,12 +62,12 @@ impl Character {
         println!("{}'s attack is {}, and it does {} damage.", self.name, self.attack, self.damage);
     }
 
-    fn take_damage(&mut self, character: &Character) {
-        println!("{} takes {} damage from {}!", self.name, character.damage, character.name);
+    fn take_damage(&mut self, character: &Character, dmg_multiplier: i32) {
+        println!("{} takes {} damage from {}.", self.name, character.damage * dmg_multiplier, character.name);
         if self.hp - character.damage < 0 {
             self.hp = 0
         } else {
-            self.hp -= character.damage
+            self.hp -= character.damage * dmg_multiplier
         }
     }
 }
@@ -100,13 +103,22 @@ pub fn player_menu(mut player: Character, mut enemy: Character) {
     if input == "1" || input == "attack" || input == "Attack" || input == "a" {
         println!("Player attacks!");
         let roll = roll_attack(&player, &enemy);
-        if roll > enemy.evade {
+
+        // add in 'if' branch for critical hits 
+        // (range w/ min: 100 - critical, max: 100)
+        let critical_min = 100 - player.critical;
+        if roll >= critical_min {
+            println!("Critical hit by {}! Double damage!!", player.name);
+            enemy.take_damage(&player, 2);
+            enemy.print_character_hp();
+        } else if roll > enemy.evade {
             println!("{} hits!", player.name);
-            enemy.take_damage(&player);
+            enemy.take_damage(&player, 1);
             enemy.print_character_hp();
         } else {
             println!("{} misses!", player.name);
         };
+
     } else if input == "2" || input == "defend" || input == "Defend" || input == "d" {
         println!("Player defends!");
     } else if input == "3" || input == "retreat" || input == "Retreat" || input == "r" {
