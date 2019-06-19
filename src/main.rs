@@ -20,7 +20,7 @@ fn main() {
         hp: 8,
         attack: String::from("Chomp"),
         damage: 3,
-        evade: 20,
+        evade: 30,
     };
 
 
@@ -99,8 +99,14 @@ pub fn player_menu(mut player: Character, mut enemy: Character) {
 
     if input == "1" || input == "attack" || input == "Attack" || input == "a" {
         println!("Player attacks!");
-        enemy.take_damage(&player);
-        enemy.print_character_hp();
+        let roll = roll_attack(&player, &enemy);
+        if roll > enemy.evade {
+            println!("{} hits!", player.name);
+            enemy.take_damage(&player);
+            enemy.print_character_hp();
+        } else {
+            println!("{} misses!", player.name);
+        };
     } else if input == "2" || input == "defend" || input == "Defend" || input == "d" {
         println!("Player defends!");
     } else if input == "3" || input == "retreat" || input == "Retreat" || input == "r" {
@@ -117,7 +123,6 @@ pub fn player_menu(mut player: Character, mut enemy: Character) {
     // println!("input is: {}", input)
 }
 
-
 pub fn get_input() -> String {
     let mut input = String::new();
 
@@ -127,6 +132,14 @@ pub fn get_input() -> String {
     input = input.trim().to_string();
 
     return input
+}
+
+// practice using an Enum to return either a "hit" or "miss"
+pub fn roll_attack(player: &Character, enemy: &Character) -> u32 {
+    let mut rng = rand::thread_rng();
+    let roll = rng.gen_range(1, 101);
+    println!("roll is: {}", roll);
+    return roll;
 }
 
 
