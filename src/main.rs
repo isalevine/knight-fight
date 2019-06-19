@@ -1,5 +1,8 @@
+extern crate rand;
+
 use std::io; 
 use std::process;
+use rand::Rng;
 
 
 fn main() {
@@ -9,6 +12,7 @@ fn main() {
         hp: 10,
         attack: String::from("Swing Sword"),
         damage: 5,
+        evade: 50,
     };
 
     let mut lizardman = Character {
@@ -16,6 +20,7 @@ fn main() {
         hp: 8,
         attack: String::from("Chomp"),
         damage: 3,
+        evade: 20,
     };
 
 
@@ -35,6 +40,7 @@ pub struct Character {
     hp: i32,
     attack: String,
     damage: i32,
+    evade: u32,
 }
 
 impl Character {
