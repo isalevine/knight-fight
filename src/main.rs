@@ -7,6 +7,7 @@ use rand::Rng;
 
 fn main() {
 
+    // critical temp. set to 50 for testing - default = 10 ??
     let mut knight = Character {
         name: String::from("Knight"),
         hp: 10,
