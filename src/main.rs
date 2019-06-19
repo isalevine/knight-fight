@@ -58,13 +58,39 @@ fn main() {
     lizardman.take_damage(&knight);
     lizardman.print_character_hp();
 
-    get_input();
+    player_menu();
 
     // next functions:
     // if-statement for hp 0 or below => dead
     // menu!!
     // randomizer??
     
+}
+
+
+pub fn player_menu() {
+    println!("Please select an option:
+    1) Attack
+    2) Defend
+    3) Retreat
+    0) Quit");
+
+    let input = get_input();
+
+    if input == "1" || input == "attack" || input == "Attack" || input == "a" {
+        println!("Player attacks!");
+    } else if input == "2" || input == "defend" || input == "Defend" || input == "d" {
+        println!("Player defends!");
+    } else if input == "3" || input == "retreat" || input == "Retreat" || input == "r" {
+        println!("Player retreats!");
+    } else if input == "0" || input == "quit" || input == "Quit" || input == "q" {
+        println!("Player defends!");
+    } else {
+        println!("Invalid input!");
+        player_menu();
+    };
+
+    // println!("input is: {}", input)
 }
 
 
@@ -75,8 +101,6 @@ pub fn get_input() -> String {
         .expect("Failed to read line");
 
     input = input.trim().to_string();
-
-    println!("You input: '{}'", input);
 
     return input
 }
