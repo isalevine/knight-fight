@@ -152,6 +152,9 @@ pub fn player_menu(mut player: Character, mut enemy: Character) -> (Character, C
         println!("Invalid input!");
     };
 
+    // lazy formatting - extra space at tend of each turn (better way?)
+    println!("");
+
     // consider calling enemy_turn here and passing ownership instead of return?
     return (player, enemy);
 
@@ -217,6 +220,9 @@ pub fn enemy_turn(mut player: Character, mut enemy: Character) -> (Character, Ch
         println!("Enemy defends!");
         enemy.defend = true;
     };
+
+    // lazy formatting - extra space at tend of each turn (better way?)
+    println!("");
 
     // consider calling enemy_turn here and passing ownership instead of return?
     return (player, enemy);
