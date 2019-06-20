@@ -14,6 +14,8 @@ fn main() {
         attack: String::from("Swing Sword"),
         damage: 5,
         evade: 50,
+        defend: false,
+        defend_bonus: 30,
         critical: 50,
     };
 
@@ -23,6 +25,8 @@ fn main() {
         attack: String::from("Chomp"),
         damage: 3,
         evade: 30,
+        defend: false,
+        defend_bonus: 20,
         critical: 5,
     };
 
@@ -44,6 +48,8 @@ pub struct Character {
     attack: String,
     damage: i32,
     evade: u32,
+    defend: bool,
+    defend_bonus: u32,
     critical: u32,
 }
 
@@ -104,6 +110,12 @@ pub fn player_menu(mut player: Character, mut enemy: Character) {
     if input == "1" || input == "attack" || input == "Attack" || input == "a" {
         println!("Player attacks!");
         let roll = roll_attack(&player, &enemy);
+        let mut evade = enemy.evade;
+        
+        if enemy.defend == true {
+            evade += enemy.defend_bonus;
+            enemy.defend = false;
+        };
 
         // add in 'if' branch for critical hits 
         // (range w/ min: 100 - critical, max: 100)
@@ -112,7 +124,7 @@ pub fn player_menu(mut player: Character, mut enemy: Character) {
             println!("Critical hit by {}! Double damage!!", player.name);
             enemy.take_damage(&player, 2);
             enemy.print_character_hp();
-        } else if roll > enemy.evade {
+        } else if roll > evade {
             println!("{} hits!", player.name);
             enemy.take_damage(&player, 1);
             enemy.print_character_hp();
@@ -122,6 +134,8 @@ pub fn player_menu(mut player: Character, mut enemy: Character) {
 
     } else if input == "2" || input == "defend" || input == "Defend" || input == "d" {
         println!("Player defends!");
+        player.defend = true;
+        
     } else if input == "3" || input == "retreat" || input == "Retreat" || input == "r" {
         println!("Player retreats!");
     } else if input == "0" || input == "quit" || input == "Quit" || input == "q" {
