@@ -16,7 +16,7 @@ fn main() {
         evade: 50,
         defend: false,
         defend_bonus: 30,
-        critical: 50,
+        critical: 10,
     };
 
     let mut lizardman = Character {
@@ -95,10 +95,17 @@ pub fn main_turn_loop(mut player: Character, mut enemy: Character) {
     // enemy.take_damage(&player);
     // enemy.print_character_hp();
 
-    player_menu(player, enemy);
+    // tuples implemented to practice using/returning them and ownership--
+    // see notes below re: calling enemy_turn inside player_menu...
+    let mut tuple = player_menu(player, enemy);
+
+    tuple = enemy_turn(tuple.0, tuple.1);
+
+    main_turn_loop(tuple.0, tuple.1);
 }
 
-pub fn player_menu(mut player: Character, mut enemy: Character) {
+
+pub fn player_menu(mut player: Character, mut enemy: Character) -> (Character, Character) {
     println!("Your turn! Please select an option:
     1) Attack
     2) Defend
@@ -135,7 +142,7 @@ pub fn player_menu(mut player: Character, mut enemy: Character) {
     } else if input == "2" || input == "defend" || input == "Defend" || input == "d" {
         println!("Player defends!");
         player.defend = true;
-        
+
     } else if input == "3" || input == "retreat" || input == "Retreat" || input == "r" {
         println!("Player retreats!");
     } else if input == "0" || input == "quit" || input == "Quit" || input == "q" {
@@ -145,10 +152,14 @@ pub fn player_menu(mut player: Character, mut enemy: Character) {
         println!("Invalid input!");
     };
 
-    player_menu(player, enemy);
+    // consider calling enemy_turn here and passing ownership instead of return?
+    return (player, enemy);
+
+    // player_menu(player, enemy);
 
     // println!("input is: {}", input)
 }
+
 
 pub fn get_input() -> String {
     let mut input = String::new();
@@ -161,12 +172,54 @@ pub fn get_input() -> String {
     return input
 }
 
+
 // practice using an Enum to return either a "hit" or "miss"
 pub fn roll_attack(player: &Character, enemy: &Character) -> u32 {
     let mut rng = rand::thread_rng();
     let roll = rng.gen_range(1, 101);
-    println!("roll is: {}", roll);
+    println!("(roll is: {})", roll);
     return roll;
+}
+
+
+pub fn enemy_turn(mut player: Character, mut enemy: Character) -> (Character, Character) {
+    let mut rng = rand::thread_rng();
+    let action = rng.gen_range(1, 3);
+    println!("(enemy action is {})", action);
+
+    // action 1 & 2 copied from Player function above, 
+    // refactor both as one Attack and one Defend function
+    if action == 1 {    
+        println!("Enemy attacks!");
+        let roll = roll_attack(&enemy, &player);
+        let mut evade = player.evade;
+        
+        if player.defend == true {
+            evade += player.defend_bonus;
+            player.defend = false;
+        };
+
+        // add in 'if' branch for critical hits 
+        // (range w/ min: 100 - critical, max: 100)
+        let critical_min = 100 - enemy.critical;
+        if roll >= critical_min {
+            println!("Critical hit by {}! Double damage!!", enemy.name);
+            player.take_damage(&enemy, 2);
+            player.print_character_hp();
+        } else if roll > evade {
+            println!("{} hits!", enemy.name);
+            player.take_damage(&enemy, 1);
+            player.print_character_hp();
+        } else {
+            println!("{} misses!", enemy.name);
+        };
+    } else if action == 2 {
+        println!("Enemy defends!");
+        enemy.defend = true;
+    };
+
+    // consider calling enemy_turn here and passing ownership instead of return?
+    return (player, enemy);
 }
 
 
