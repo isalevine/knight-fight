@@ -187,12 +187,12 @@ pub fn roll_attack(player: &Character, enemy: &Character) -> u32 {
 
 pub fn enemy_turn(mut player: Character, mut enemy: Character) -> (Character, Character) {
     let mut rng = rand::thread_rng();
-    let action = rng.gen_range(1, 3);
+    let action = rng.gen_range(1, 11);
     println!("(enemy action is {})", action);
 
     // action 1 & 2 copied from Player function above, 
     // refactor both as one Attack and one Defend function
-    if action == 1 {    
+    if action > 3 {    
         println!("Enemy attacks!");
         let roll = roll_attack(&enemy, &player);
         let mut evade = player.evade;
@@ -216,7 +216,7 @@ pub fn enemy_turn(mut player: Character, mut enemy: Character) -> (Character, Ch
         } else {
             println!("{} misses!", enemy.name);
         };
-    } else if action == 2 {
+    } else if action <= 3 {
         println!("Enemy defends!");
         enemy.defend = true;
     };
