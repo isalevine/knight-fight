@@ -59,9 +59,9 @@ impl Character {
         if self.hp <= 0 {
             println!("{} is dead!", self.name);
 
-            // temp
+            // temp - ADD LOSE CONDITION, but not here? (main_loop/menu??)
             println!("You win!! (Exiting program now.)");
-            std::process::exit(0);
+            process::exit(0);
         };
     }
 
@@ -115,7 +115,7 @@ pub fn player_menu(mut player: Character, mut enemy: Character) -> (Character, C
     let input = get_input();
 
     if input == "1" || input == "attack" || input == "Attack" || input == "a" {
-        println!("Player attacks!");
+        println!("Player attacks with {}!", player.attack);
         let roll = roll_attack(&player, &enemy);
         let mut evade = enemy.evade;
         
@@ -145,6 +145,8 @@ pub fn player_menu(mut player: Character, mut enemy: Character) -> (Character, C
 
     } else if input == "3" || input == "retreat" || input == "Retreat" || input == "r" {
         println!("Player retreats!");
+        let retreat = (player.evade * 2) - enemy.evade;
+
     } else if input == "0" || input == "quit" || input == "Quit" || input == "q" {
         println!("Exiting program. Goodbye!");
         std::process::exit(0);
