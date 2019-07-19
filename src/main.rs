@@ -30,6 +30,7 @@ fn main() {
         critical: 5,
     };
 
+    welcome_menu();
 
     main_turn_loop(knight, lizardman);
 
@@ -235,3 +236,8 @@ pub fn enemy_turn(mut player: Character, mut enemy: Character) -> (Character, Ch
 }
 
 
+pub fn welcome_menu() {
+    println!("
+Welcome to Knight Fight!
+    ")
+}
