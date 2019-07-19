@@ -57,7 +57,10 @@ impl Character {
     fn print_character_hp(&self) {
         println!("{}'s HP is currently {}.", self.name, self.hp);
         if self.hp <= 0 {
-            println!("{} is dead!", self.name);
+            // NOT a fan of how this string line-spacing is written here...find a more readable way?
+            println!("
+{} is dead!"
+            , self.name);
 
             // temp - ADD LOSE CONDITION, but not here? (main_loop/menu??)
             println!("You win!! (Exiting program now.)");
@@ -106,11 +109,12 @@ pub fn main_turn_loop(mut player: Character, mut enemy: Character) {
 
 
 pub fn player_menu(mut player: Character, mut enemy: Character) -> (Character, Character) {
-    println!("Your turn! Please select an option:
-    1) Attack
-    2) Defend
-    3) Retreat
-    0) Quit");
+    println!("
+Your turn! Please select an option:
+1) Attack
+2) Defend
+3) Retreat
+0) Quit");
 
     let input = get_input();
 
@@ -214,7 +218,7 @@ pub fn enemy_turn(mut player: Character, mut enemy: Character) -> (Character, Ch
         } else if roll > evade {
             println!("{} hits!", enemy.name);
             player.take_damage(&enemy, 1);
-            player.print_character_hp();
+            // player.print_character_hp();
         } else {
             println!("{} misses!", enemy.name);
         };
