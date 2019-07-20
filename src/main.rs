@@ -239,5 +239,10 @@ pub fn enemy_turn(mut player: Character, mut enemy: Character) -> (Character, Ch
 pub fn welcome_menu() {
     println!("
 Welcome to Knight Fight!
+========================
+You are a knight fighting
+a lizardman. Select your
+actions, and don't die!
+Good luck!!
     ")
 }
