@@ -217,7 +217,7 @@ pub fn enemy_turn(mut player: Character, mut enemy: Character) -> (Character, Ch
     // action 1 & 2 copied from Player function above, 
     // refactor both as one Attack and one Defend function
     if action > 3 {    
-        println!("Enemy attacks!");
+        println!("{} attacks with {}!", enemy.name, enemy.attack.name);
         let roll = roll_attack(&enemy, &player);
         let mut evade = player.evade;
         
