@@ -7,6 +7,8 @@ use rand::Rng;
 
 fn main() {
 
+    // refactor or move all attacks to a separate tuple/array, and make it globally accessible
+    // for instantiating knight and lizardman? (what is most efficient way to do that?)
     let mut swing_sword = Attack {
         name: String::from("Swing Sword"),
         damage: 5,
