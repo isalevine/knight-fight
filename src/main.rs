@@ -19,6 +19,12 @@ fn main() {
         damage: 3,
     };
 
+    // do separate attacks need separate accuracies? or maybe do ELEMENTS for damage bonuses...
+    let mut lizardman_tail_whip = Attack {
+        name: String::from("Tail Whip"),
+        damage: 4,
+    }
+
     // consider refactoring attacks to be a tuple/array of multiple options in each Character?
 
     // critical temp. set to 50 for testing - default = 10 ??
