@@ -19,6 +19,8 @@ fn main() {
         damage: 3,
     };
 
+    // consider refactoring attacks to be a tuple/array of multiple options in each Character?
+
     // critical temp. set to 50 for testing - default = 10 ??
     let mut knight = Character {
         name: String::from("Knight"),
