@@ -7,12 +7,23 @@ use rand::Rng;
 
 fn main() {
 
+    let mut swing_sword = Attack {
+        name: String::from("Swing Sword"),
+        damage: 5,
+    };
+
+    let mut lizardman_chomp = Attack {
+        name: String::from("Chomp"),
+        damage: 3,
+    };
+
     // critical temp. set to 50 for testing - default = 10 ??
     let mut knight = Character {
         name: String::from("Knight"),
         hp: 10,
-        attack: String::from("Swing Sword"),
-        damage: 5,
+        attack: swing_sword,
+        // attack: String::from("Swing Sword"),
+        // damage: 5,
         evade: 50,
         defend: false,
         defend_bonus: 30,
@@ -22,8 +33,9 @@ fn main() {
     let mut lizardman = Character {
         name: String::from("Lizardman"),
         hp: 8,
-        attack: String::from("Chomp"),
-        damage: 3,
+        attack: lizardman_chomp,
+        // attack: String::from("Chomp"),
+        // damage: 3,
         evade: 30,
         defend: false,
         defend_bonus: 20,
@@ -46,8 +58,9 @@ fn main() {
 pub struct Character {
     name: String,
     hp: i32,
-    attack: String,
-    damage: i32,
+    attack: Attack,
+    // attack: String,
+    // damage: i32,
     evade: u32,
     defend: bool,
     defend_bonus: u32,
@@ -70,20 +83,24 @@ impl Character {
     }
 
     fn print_character_attack(&self) {
-        println!("{}'s attack is {}, and it does {} damage.", self.name, self.attack, self.damage);
+        println!("{}'s attack is {}, and it does {} damage.", self.name, self.attack.name, self.attack.damage);
     }
 
     fn take_damage(&mut self, character: &Character, dmg_multiplier: i32) {
-        println!("{} takes {} damage from {}.", self.name, character.damage * dmg_multiplier, character.name);
-        if self.hp - character.damage < 0 {
+        println!("{} takes {} damage from {}.", self.name, character.attack.damage * dmg_multiplier, character.name);
+        if self.hp - character.attack.damage < 0 {
             self.hp = 0
         } else {
-            self.hp -= character.damage * dmg_multiplier
+            self.hp -= character.attack.damage * dmg_multiplier
         }
     }
 }
 
 
+pub struct Attack {
+    name: String,
+    damage: i32,
+}
 
 
 pub fn main_turn_loop(mut player: Character, mut enemy: Character) {
@@ -120,7 +137,7 @@ Your turn! Please select an option:
     let input = get_input();
 
     if input == "1" || input == "attack" || input == "Attack" || input == "a" {
-        println!("Player attacks with {}!", player.attack);
+        println!("Player attacks with {}!", player.attack.name);
         let roll = roll_attack(&player, &enemy);
         let mut evade = enemy.evade;
         
