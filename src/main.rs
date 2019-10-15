@@ -178,6 +178,7 @@ Your turn! Please select an option:
     } else if input == "3" || input == "retreat" || input == "Retreat" || input == "r" {
         println!("Player retreats!");
         let retreat = (player.evade * 2) - enemy.evade;
+        // currently no action from retreating...
 
     } else if input == "0" || input == "quit" || input == "Quit" || input == "q" {
         println!("Exiting program. Goodbye!");
