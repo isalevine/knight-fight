@@ -23,7 +23,7 @@ fn main() {
     let mut lizardman_tail_whip = Attack {
         name: String::from("Tail Whip"),
         damage: 4,
-    }
+    };
 
     // consider refactoring attacks to be a tuple/array of multiple options in each Character?
 
